@@ -51,7 +51,13 @@ const swaggerUi = require("swagger-ui-express");
  *            type: string
  *          password:
  *            type: string
- *
+ *      commentSchema:
+ *          type: object
+ *          properties:
+ *            name:
+ *              type: string
+ *            message:
+ *              type: string
  */
 
 const options = {
@@ -124,12 +130,180 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *          200:
  *              description: To test Get method
  */
-
+/**
+ * @swagger
+ * /blogs/{id}:
+ *  patch:
+ *    security:
+ *      - bearerAuth: []
+ *    summary: Used for editing blog
+ *    description: This API is used to edit a blog
+ *    parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            description: numeric ID required
+ *            schema:
+ *              type: string
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *           $ref: "#components/schemas/blogSchema"
+ *    responses:
+ *      200:
+ *          description: Blog updated successfully
+ */
 //Delete Blog
 
 /**
  * @swagger
  * /blogs/{id}:
+ *  delete:
+ *      summary: This API is used to check if get method is working or not
+ *      description: This API is used to check if get method is working or not
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            description: numeric ID required
+ *            schema:
+ *            type: integer
+ *      responses:
+ *          200:
+ *              description: Data deleted successfully
+ */
+
+/**
+ * @swagger
+ * /blogs/comments/{id}:
+ *  post:
+ *    summary: To a comment on a blog
+ *    description: Used to post a comment
+ *    parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          description: numeric ID required
+ *          schema:
+ *          type: integer
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *           $ref: "#components/schemas/commentSchema"
+ *    responses:
+ *      200:
+ *          description: comment addeed successfully
+ */
+
+/**
+ * @swagger
+ * /blogs/comments/{id}:
+ *  get:
+ *      summary: This API is used to check if get method on comments is working or not
+ *      description: This API is used to check if get method is working or not
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            description: numeric ID required
+ *            schema:
+ *            type: integer
+ *      responses:
+ *          200:
+ *              description: To test Get method
+ */
+
+/**
+ * @swagger
+ * /blogs/likes/{id}:
+ *  post:
+ *    summary: To a comment on a blog
+ *    description: Used to post a comment
+ *    parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          description: numeric ID required
+ *          schema:
+ *          type: integer
+ *    responses:
+ *      200:
+ *          description: like addeed successfully
+ */
+
+/**
+ * @swagger
+ * /blogs/likes/{id}:
+ *  get:
+ *    summary: To a comment on a blog
+ *    description: Used to post a comment
+ *    parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          description: numeric ID required
+ *          schema:
+ *          type: integer
+ *    responses:
+ *      200:
+ *          description: like addeed successfully
+ */
+
+//Add message
+/**
+ * @swagger
+ * /contacts:
+ *  post:
+ *    summary: To add Message
+ *    description: Used to add message
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *           $ref: "#components/schemas/contactSchema"
+ *    responses:
+ *      200:
+ *          description: Message added successfully
+ */
+
+//Get all messages
+
+/**
+ * @swagger
+ * /contacts:
+ *  get:
+ *      summary: This API is used to check if get method is working or not
+ *      description: This API is used to check if get method is working or not
+ *      responses:
+ *          200:
+ *              description: To test Get method
+ */
+
+/**
+ * @swagger
+ * /contacts/{id}:
+ *  get:
+ *      summary: This API is used to check if get method is working or not
+ *      description: This API is used to check if get method is working or not
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            description: numeric ID required
+ *            schema:
+ *            type: integer
+ *      responses:
+ *          200:
+ *              description: To test Get method
+ */
+/**
+ * @swagger
+ * /contacts/{id}:
  *  delete:
  *      summary: This API is used to check if get method is working or not
  *      description: This API is used to check if get method is working or not
@@ -231,75 +405,6 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *          200:
  *              description: Data deleted successfully
  */
-
-//Add message
-/**
- * @swagger
- * /contacts:
- *  post:
- *    summary: To add Message
- *    description: Used to add message
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *           $ref: "#components/schemas/contactSchema"
- *    responses:
- *      200:
- *          description: Message added successfully
- */
-
-//Get all messages
-
-/**
- * @swagger
- * /contacts:
- *  get:
- *      summary: This API is used to check if get method is working or not
- *      description: This API is used to check if get method is working or not
- *      responses:
- *          200:
- *              description: To test Get method
- */
-
-/**
- * @swagger
- * /contacts/{id}:
- *  get:
- *      summary: This API is used to check if get method is working or not
- *      description: This API is used to check if get method is working or not
- *      parameters:
- *          - in: path
- *            name: id
- *            required: true
- *            description: numeric ID required
- *            schema:
- *            type: integer
- *      responses:
- *          200:
- *              description: To test Get method
- */
-/**
- * @swagger
- * /contacts/{id}:
- *  delete:
- *      summary: This API is used to check if get method is working or not
- *      description: This API is used to check if get method is working or not
- *      parameters:
- *          - in: path
- *            name: id
- *            required: true
- *            description: numeric ID required
- *            schema:
- *            type: integer
- *      responses:
- *          200:
- *              description: Data deleted successfully
- */
-app.get("/api/welcome", (req, res) => {
-  res.status(200).send({ message: "testing with mocha and chai " });
-});
 
 app.use(express.json());
 app.use("/api", routes);

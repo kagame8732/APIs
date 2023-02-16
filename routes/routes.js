@@ -35,8 +35,8 @@ const {
 router.post("/blogs", protectRoute, blogController.blog_create);
 router.get("/blogs/:id", blogController.blog_detail);
 router.get("/blogs", blogController.blog_details);
-router.patch("/blogs/:id", blogController.blog_update);
-router.delete("/blogs/:id", blogController.blog_delete);
+router.patch("/blogs/:id", protectRoute, blogController.blog_update);
+router.delete("/blogs/:id", protectRoute, blogController.blog_delete);
 //Blog Comment
 router.post("/blogs/comments/:id", createComment);
 router.get("/blogs/comments/:id", getComment);
@@ -47,12 +47,12 @@ router.get("/blogs/likes/:id", getLike);
 router.post("/contacts", contactController.message_create);
 router.get("/contacts/:id", contactController.message_detail);
 router.get("/contacts", contactController.message_details);
-router.delete("/contacts/:id", contactController.message_delete);
+router.delete("/contacts/:id", protectRoute, contactController.message_delete);
 //User
 router.post("/signup", signup);
-router.get("/signup/:id", signup_detail);
-router.get("/signup", signup_details);
-router.delete("/signup/:id", signup_delete);
+router.get("/signup/:id", protectRoute, signup_detail);
+router.get("/signup", protectRoute, signup_details);
+router.delete("/signup/:id", protectRoute, signup_delete);
 router.post("/login", login);
 
 module.exports = router;

@@ -80,26 +80,9 @@ const login = async (req, res) => {
 };
 
 //Router Protection
-
-// const Auth = async (req, res, next) => {
-//   try {
-//     const authHeader = req.headers.Authorization;
-//     const token = authHeader.split(" ")[1];
-//     const tokenVerify = jwt.verify(token, SECRET_KEY);
-//     const tokenCompare = await userModel.findById(tokenVerify.id);
-//     if (!tokenCompare) {
-//       return res
-//         .status(401)
-//         .json({ message: "Access denied, no token provided" });
-//     }
-//     next();
-//   } catch (err) {
-//     res.status(401).send("Invalid");
-//   }
-// };
-
 const protectRoute = (req, res, next) => {
-  const token = req.header("Authorization");
+  const token = req.header("Authorization").split(" ")[1];
+  console.log(token);
   if (!token) {
     return res
       .status(401)

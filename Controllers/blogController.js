@@ -32,8 +32,9 @@ let blog_detail = async (req, res) => {
 let blog_update = async (req, res) => {
   try {
     const blog = await Blog.findOne({ _id: req.params.id });
-    if (req.file) {
-      blog.image = req.file.path;
+    if (req.body.image) {
+      // blog.image = req.file.path;
+      blog.image = req.body.image;
     }
     if (req.body.title) {
       blog.title = req.body.title;
@@ -43,10 +44,9 @@ let blog_update = async (req, res) => {
     }
     await blog.save();
     // res.send(blog);
-    res.send({ message: "Blog updated successfully" });
+    res.status(201).send({ message: "Blog updated successfully" });
   } catch {
-    res.status(404);
-    res.send({ message: "Blog doesn't exist" });
+    res.status(404).send({ message: "Blog doesn't exist" });
   }
 };
 //|Delete a blog
