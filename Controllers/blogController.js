@@ -12,7 +12,6 @@ let blog_create = async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
   const blog = new Blog({
     image: req.body.image,
-    // image: req.file.path,
     title: req.body.title,
     description: req.body.description,
   });
@@ -33,7 +32,6 @@ let blog_update = async (req, res) => {
   try {
     const blog = await Blog.findOne({ _id: req.params.id });
     if (req.body.image) {
-      // blog.image = req.file.path;
       blog.image = req.body.image;
     }
     if (req.body.title) {
@@ -43,7 +41,6 @@ let blog_update = async (req, res) => {
       blog.description = req.body.description;
     }
     await blog.save();
-    // res.send(blog);
     res.status(201).send({ message: "Blog updated successfully" });
   } catch {
     res.status(404).send({ message: "Blog doesn't exist" });

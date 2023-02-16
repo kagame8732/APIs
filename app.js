@@ -111,7 +111,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *              description: To test Get method
  */
 
-//Get one Blog
+//Get one Blog by id
 
 /**
  * @swagger
@@ -130,6 +130,9 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *          200:
  *              description: To test Get method
  */
+
+//Edit a blog by id
+
 /**
  * @swagger
  * /blogs/{id}:
@@ -155,7 +158,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *      200:
  *          description: Blog updated successfully
  */
-//Delete Blog
+//Delete a Blog by id
 
 /**
  * @swagger
@@ -174,6 +177,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *          200:
  *              description: Data deleted successfully
  */
+
+//Add a comment to a blog by using blog ID
 
 /**
  * @swagger
@@ -199,6 +204,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *          description: comment addeed successfully
  */
 
+//Get a comment by blog ID
+
 /**
  * @swagger
  * /blogs/comments/{id}:
@@ -216,6 +223,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *          200:
  *              description: To test Get method
  */
+
+//Add like to a blog by blog id
 
 /**
  * @swagger
@@ -284,6 +293,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *              description: To test Get method
  */
 
+//Get a single message by ID
+
 /**
  * @swagger
  * /contacts/{id}:
@@ -301,6 +312,9 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *          200:
  *              description: To test Get method
  */
+
+//Delete message
+
 /**
  * @swagger
  * /contacts/{id}:
