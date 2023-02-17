@@ -1,168 +1,224 @@
+const { expect } = require("chai");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const server = require("../app");
+const Blog = require("../models/Blog");
 
-const should = chai.should();
-const expect = chai.expect;
+chai.should();
 chai.use(chaiHttp);
 
-// describe("Users API", () => {
-// Get User Signup
-//   describe("GET /api/signup", () => {
-//     it("It should GET all the users", (done) => {
-//       chai
-//         .request(server)
-//         .get("/api/signup")
-//         .end((err, response) => {
-//           response.should.have.status(200);
-//           response.body.should.be.a("object");
-//           response.body.length.should.be.eq(4);
-//         });
-//       done();
-//     });
-//   });
-//   it("It should NOT GET all the users", (done) => {
-//     chai
-//       .request(server)
-//       .get("/api/signup")
-//       .end((err, response) => {
-//         response.should.have.status(404);
-//       });
-//     done();
-//   });
-// });
-describe("Testing API endpoint", () => {
-  it("Testing default root", (done) => {
-    chai
-      .request(server)
-      .get("/api/welcome")
-      .end((err, res) => {
-        res.should.have.status(200);
-        done();
-      });
-  });
-});
-
-// Get User Signup
-describe("Users API", () => {
-  describe("GET/signup/", () => {
-    it("It should GET all the users", (done) => {
+describe("Contact API", () => {
+  /**
+   * Test the GET all messages route
+   */
+  describe("GET /api/contacts", () => {
+    it("it should GET all the messages", (done) => {
       chai
         .request(server)
-        .get("/api/signup")
+        .get("/api/contacts")
+        .end((err, response) => {
+          response.should.have.status(200);
+        });
+      done();
+    });
+    it("it should NOT GET all the messages", (done) => {
+      chai
+        .request(server)
+        .get("/api/contact")
+        .end((err, response) => {
+          response.should.have.status(404);
+        });
+      done();
+    });
+  });
+
+  /**
+   * Test the GET message  (by id) route
+   */
+  describe("GET /api/contacts/:id", () => {
+    it("it should GET a message", (done) => {
+      chai
+        .request(server)
+        .get("/api/contacts/:id")
+        .end((err, response) => {
+          response.should.have.status(200);
+        });
+      done();
+    });
+  });
+  /**
+   * Test the POST a message route
+   */
+  describe("POST /api/contacts", () => {
+    it("it should POST a new messages", (done) => {
+      const contact = {
+        name: "kalex",
+        email: "kal1@gmail.com",
+        message: "Hello to you",
+      };
+      chai
+        .request(server)
+        .post("/api/contacts")
+        .send(contact)
         .end((err, response) => {
           response.should.have.status(201);
-          response.body.should.be.a("object");
+          response.body.should.have.property("name");
+          response.body.should.have.property("email");
+          response.body.should.have.property("message");
         });
       done();
     });
-    it("it should not GET users", () => {
-      chai.request(server).get("/user");
-    });
-  });
 
-  it("it should not be GET users", () => {
-    chai.request(server).get("/signup");
-  });
-  it("it should GET single user", () => {
-    chai.request(server).get("/signup/:id");
-  });
-});
-//Post new user
-describe("POST /signup/", () => {
-  it("It should POST all the users", (done) => {
-    chai
-      .request(server)
-      .get("/signup")
-      .end((err, response) => {
-        response.should.have.status(404);
-        response.body.should.be.a("object");
-      });
-    done();
-  });
-});
-describe("POST/login/", () => {
-  it("It should Generate token after login of verified user", (done) => {
-    chai
-      .request(server)
-      .get("/login")
-      .end((err, response) => {
-        response.should.have.status(404);
-        response.body.should.be.a("object");
-      });
-    done();
-  });
-  it("it should not POST verify user", () => {
-    chai.request(server).get("/user");
-  });
-  it("it should POST single user", () => {
-    chai.request(server).get("/login/:id");
-  });
-});
-
-describe("POST/contacts/", () => {
-  it("It should POST messages", (done) => {
-    chai
-      .request(server)
-      .get("/contacts")
-      .end((err, response) => {
-        response.should.have.status(404);
-        response.body.should.be.a("object");
-      });
-    done();
-  });
-  it("it should not POST the messages", () => {
-    chai.request(server).get("/contacts");
-  });
-  it("it should POST single message", () => {
-    chai.request(server).get("/contacts/:id");
-  });
-});
-describe("Users API", () => {
-  describe("GET /blogs/", () => {
-    it("It should GET all blogs", (done) => {
+    it("it should NOT POST a new messages without the name", (done) => {
+      const contact = {
+        email: "kal1@gmail.com",
+        message: "Hello to you",
+      };
       chai
         .request(server)
-        .get("/blogs")
+        .post("/api/contacts")
+        .send(contact)
         .end((err, response) => {
-          response.should.have.status(404);
-          response.body.should.be.a("object");
+          response.should.have.status(400);
         });
       done();
     });
-    it("it should not GET users", () => {
-      chai.request(server).get("/blogs");
-    });
   });
+  /**
+   * Test the  DELETE a message
+   */
 
-  it("it should not be GET users", () => {
-    chai.request(server).get("/blogs");
-  });
-  it("it should GET single user", () => {
-    chai.request(server).get("/blogs/:id");
-  });
-});
-describe("Users API", () => {
-  describe("GET /blogs/", () => {
-    it("It should GET all the users", (done) => {
+  /**
+   * Test the GET All blogs route
+   */
+  describe("GET /api/blogs", () => {
+    it("it should GET all the users", (done) => {
       chai
         .request(server)
-        .post("/blogs")
+        .get("/api/blogs")
         .end((err, response) => {
-          response.should.have.status(404);
-          response.body.should.be.a("object");
+          response.should.have.status(200);
         });
       done();
     });
-    it("it should not GET users", () => {
-      chai.request(server).get("/blogs");
+    it("it should NOT GET all the users", (done) => {
+      chai
+        .request(server)
+        .get("/api/blog")
+        .end((err, response) => {
+          response.should.have.status(404);
+        });
+      done();
+    });
+  });
+  /**
+   * Test GET single  blog
+   */
+  describe("GET /api/blogs/:id", () => {
+    it("it should GET a single blog with ID", (done) => {
+      chai
+        .request(server)
+        .get("/api/blogs/:id")
+        .end((err, response) => {
+          response.should.have.status(200);
+        });
+      done();
+    });
+  });
+  /**
+   * Test to add a blog
+   */
+  describe("POST /api/blogs", () => {
+    it("it should POST a new blog", (done) => {
+      const blogs = {
+        image: "https://unsplash.com/photos/2V7KKhNwQTk",
+        title: "mocha testing blog",
+        description: "Hello to you",
+      };
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGV4QGdtYWlsLmNvbSIsImlkIjoiNjNlYzkxN2VmMjYxYjY2Y2ZjYzA4ZGYwIiwiaWF0IjoxNjc2NjE4ODM1fQ.Yd8uuTPC8n4Vc0AEDrkyV8KetXv-mqt2TUXqaHDaN5I";
+      chai
+        .request(server)
+        .post("/api/blogs")
+        .send(blogs)
+        .set({ Authorization: `Bearer ${token}` })
+        .end((err, response) => {
+          response.should.have.status(201);
+          response.body.should.have.property("image");
+          response.body.should.have.property("title");
+          response.body.should.have.property("description");
+        });
+      done();
+    });
+    it("it should NOT POST a new blog without image", (done) => {
+      const blogs = {
+        title: "mocha testing blog",
+        description: "Hello to you",
+      };
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGV4QGdtYWlsLmNvbSIsImlkIjoiNjNlYzkxN2VmMjYxYjY2Y2ZjYzA4ZGYwIiwiaWF0IjoxNjc2NjE4ODM1fQ.Yd8uuTPC8n4Vc0AEDrkyV8KetXv-mqt2TUXqaHDaN5I";
+      chai
+        .request(server)
+        .post("/api/blogs")
+        .send(blogs)
+        .set({ Authorization: `Bearer ${token}` })
+        .end((err, response) => {
+          response.should.have.status(201);
+        });
+      done();
+    });
+  });
+  /**
+   * Test the Delete a blog
+   */
+
+  describe("DELETE /api/blogs/:id", function () {
+    this.timeout(10000);
+    let blogId;
+    beforeEach((done) => {
+      const blogs = new Blog({
+        image: "https://unsplash.com/photos/2V7KKhNwQTk",
+        title: "mocha testing blog",
+        description: "Hello to you",
+      });
+      blogs.save((err, create) => {
+        blogId = create._id;
+        done();
+      });
+    });
+    it("It should DELETE an existing blog", (done) => {
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGV4QGdtYWlsLmNvbSIsImlkIjoiNjNlYzkxN2VmMjYxYjY2Y2ZjYzA4ZGYwIiwiaWF0IjoxNjc2NjE4ODM1fQ.Yd8uuTPC8n4Vc0AEDrkyV8KetXv-mqt2TUXqaHDaN5I";
+      chai
+        .request(server)
+        .delete(`/api/blogs/${blogId}`)
+        .set({ Authorization: `Bearer ${token}` })
+        .end((err, response) => {
+          expect(response).to.have.status(200);
+          done();
+        });
     });
   });
 
-  it("it should not be GET users", () => {
-    chai.request(server).get("/blogs");
-  });
-  it("it should GET single user", () => {
-    chai.request(server).get("/blogs/:id");
+  /**
+   * Test Editing a blog route
+   */
+
+  /**
+   * Test the GET single user after registration
+   */
+  describe("GET /api/signup/:id", () => {
+    it("it should GET a user", (done) => {
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGV4QGdtYWlsLmNvbSIsImlkIjoiNjNlYzkxN2VmMjYxYjY2Y2ZjYzA4ZGYwIiwiaWF0IjoxNjc2NjE4ODM1fQ.Yd8uuTPC8n4Vc0AEDrkyV8KetXv-mqt2TUXqaHDaN5I";
+      chai
+        .request(server)
+        .get("/api/signup/:id")
+        .set({ Authorization: `Bearer ${token}` })
+        .end((err, response) => {
+          response.should.have.status(404);
+        });
+      done();
+    });
   });
 });

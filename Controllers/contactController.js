@@ -18,7 +18,7 @@ let message_create = async (req, res) => {
     email: req.body.email,
     message: req.body.message,
   });
-  await contact.save();
+  await contact.save().status(201);
   res.send({ message: "Message added successful" });
 };
 //Get individual message
