@@ -4,7 +4,6 @@ const schema = mongoose.Schema({
   name: String,
   email: {
     type: String,
-    unique: true,
     lowercase: true,
   },
   message: String,

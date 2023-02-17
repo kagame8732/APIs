@@ -16,7 +16,8 @@ let blog_create = async (req, res) => {
     description: req.body.description,
   });
   await blog.save();
-  res.status(201).send({ message: "Blog added successfully " });
+  // res.status(201).send({ message: "Blog added successfully " });
+  res.status(201).send(blog);
 };
 // Get all Blog
 let blog_details = async (req, res) => {
@@ -41,7 +42,8 @@ let blog_update = async (req, res) => {
       blog.description = req.body.description;
     }
     await blog.save();
-    res.status(201).send({ message: "Blog updated successfully" });
+    // res.status(200).send({ message: "Blog updated successfully" });
+    res.status(200).send(blog);
   } catch {
     res.status(404).send({ message: "Blog doesn't exist" });
   }
@@ -50,7 +52,8 @@ let blog_update = async (req, res) => {
 let blog_delete = async (req, res) => {
   try {
     await Blog.deleteOne({ _id: req.params.id });
-    res.send({ Message: "Blog delete successfully" });
+    res.json({ Message: "Blog delete successfully" });
+    // res.status(201).send(Blog);
   } catch {
     res.status(404);
     res.send({ error: "Blog doesn't exist" });
