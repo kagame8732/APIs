@@ -52,6 +52,8 @@ let blog_update = async (req, res) => {
 let blog_delete = async (req, res) => {
   try {
     await Blog.deleteOne({ _id: req.params.id });
+    // await Blog.deleteMany();
+
     res.json({ Message: "Blog delete successfully" });
     // res.status(201).send(Blog);
   } catch {
