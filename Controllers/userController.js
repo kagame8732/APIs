@@ -32,6 +32,7 @@ const signup = async (req, res) => {
       password: hashedPassword,
     });
     res.status(201).json({ message: "User created successfully" });
+    // res.status(201);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Something went wrong" });
@@ -54,7 +55,9 @@ let signup_delete = async (req, res) => {
   try {
     await userModel.deleteOne({ _id: req.params.id });
     res.status(201).send({ message: "user deleted successfully" });
-  } catch (err) {}
+  } catch (err) {
+    res.status(404).send(err);
+  }
 };
 
 //Login
@@ -80,9 +83,29 @@ const login = async (req, res) => {
 };
 
 //Router Protection
+// const protectRoute = (req, res, next) => {
+//   const token = req.header("Authorization").split(" ")[1];
+//   if (!token) {
+//     return res
+//       .status(401)
+//       .json({ message: "Access denied, no token provided" });
+//   }
+//   try {
+//     const decoded = jwt.verify(token, SECRET_KEY);
+//     req.user = decoded;
+//     next();
+//   } catch (error) {
+//     res.status(400).json({ message: "Invalid token" });
+//   }
+// };
 const protectRoute = (req, res, next) => {
-  const token = req.header("Authorization").split(" ")[1];
-  console.log(token);
+  const authHeader = req.header("Authorization");
+  if (!authHeader) {
+    return res
+      .status(401)
+      .json({ message: "Access denied, no token provided" });
+  }
+  const token = authHeader.split(" ")[1];
   if (!token) {
     return res
       .status(401)
