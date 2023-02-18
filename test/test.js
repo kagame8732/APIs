@@ -270,13 +270,13 @@ describe("API Test", () => {
           response.body.should.have.property("lastName");
           response.body.should.have.property("email");
           response.body.should.have.property("password");
-          done();
         });
+      done();
     });
     it("should NOT create a new user", (done) => {
       const user = {
         lastName: "Chris",
-        email: "manzi13@gmail.com",
+        email: "manzi@gmail.com",
         password: "00000000",
       };
 
@@ -295,37 +295,37 @@ describe("API Test", () => {
    * Get Add a comment
    */
 
-  // describe("POST /api/blogs/comments", () => {
-  //   it("it should POST a new comment", (done) => {
-  //     const commentUser = {
-  //       name: "Manzi",
-  //       message: "Chris",
-  //     };
+  describe("POST /api/blogs/comments", () => {
+    it("it should POST a new comment", (done) => {
+      const commentUser = {
+        name: "Manzi",
+        message: "Chris",
+      };
 
-  //     chai
-  //       .request(server)
-  //       .post("/api/blogs/comments:id")
-  //       .send(commentUser)
-  //       .end((err, response) => {
-  //         response.should.have.status(201);
-  //         response.body.should.have.property("name");
-  //         response.body.should.have.property("message");
-  //       });
-  //     done();
-  //   });
-  //   it("it should NOT POST a new comment", (done) => {
-  //     const commentUser = {
-  //       name: "Manzi",
-  //     };
+      chai
+        .request(server)
+        .post("/api/blogs/comments:id")
+        .send(commentUser)
+        .end((err, response) => {
+          response.should.have.status(201);
+          response.body.should.have.property("name");
+          response.body.should.have.property("message");
+        });
+      done();
+    });
+    it("it should NOT POST a new comment", (done) => {
+      const commentUser = {
+        name: "Manzi",
+      };
 
-  //     chai
-  //       .request(server)
-  //       .post("/api/blogs/comments")
-  //       .send(commentUser)
-  //       .end((err, response) => {
-  //         response.should.have.status(201);
-  //       });
-  //     done();
-  //   });
-  // });
+      chai
+        .request(server)
+        .post("/api/blogs/comments")
+        .send(commentUser)
+        .end((err, response) => {
+          response.should.have.status(201);
+        });
+      done();
+    });
+  });
 });

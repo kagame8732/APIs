@@ -31,8 +31,8 @@ const signup = async (req, res) => {
       email: email,
       password: hashedPassword,
     });
-    // res.status(201).json({ message: "User created successfully" });
-    res.status(201);
+    res.status(201).json({ message: "User created successfully" });
+    // res.status(201);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Something went wrong" });
@@ -55,7 +55,9 @@ let signup_delete = async (req, res) => {
   try {
     await userModel.deleteOne({ _id: req.params.id });
     res.status(201).send({ message: "user deleted successfully" });
-  } catch (err) {}
+  } catch (err) {
+    res.status(404).send(err);
+  }
 };
 
 //Login

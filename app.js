@@ -131,6 +131,34 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *              description: To test Get method
  */
 
+//Delete Blog
+
+/**
+ * @swagger
+ * /blogs/{id}:
+ *  delete:
+ *    security:
+ *      - bearerAuth: []
+ *    summary: Used for editing blog
+ *    description: This API is used to edit a blog
+ *    parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            description: numeric ID required
+ *            schema:
+ *              type: string
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *           $ref: "#components/schemas/blogSchema"
+ *    responses:
+ *      200:
+ *          description: Blog delete successfully
+ */
+
 //Edit a blog by id
 
 /**
@@ -158,25 +186,6 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *      200:
  *          description: Blog updated successfully
  */
-//Delete a Blog by id
-
-/**
- * @swagger
- * /blogs/{id}:
- *  delete:
- *      summary: This API is used to check if get method is working or not
- *      description: This API is used to check if get method is working or not
- *      parameters:
- *          - in: path
- *            name: id
- *            required: true
- *            description: numeric ID required
- *            schema:
- *            type: integer
- *      responses:
- *          200:
- *              description: Data deleted successfully
- */
 
 //Add a comment to a blog by using blog ID
 
@@ -201,7 +210,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *           $ref: "#components/schemas/commentSchema"
  *    responses:
  *      200:
- *          description: comment addeed successfully
+ *          description: comment added successfully
  */
 
 //Get a comment by blog ID
@@ -244,6 +253,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *          description: like addeed successfully
  */
 
+//Get like by it's ID
 /**
  * @swagger
  * /blogs/likes/{id}:
@@ -312,27 +322,33 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *          200:
  *              description: To test Get method
  */
-
 //Delete message
 
 /**
  * @swagger
- * /contacts/{id}:
+ * /contacts:
  *  delete:
- *      summary: This API is used to check if get method is working or not
- *      description: This API is used to check if get method is working or not
- *      parameters:
+ *    security:
+ *      - bearerAuth: []
+ *    summary: Used for deleting a message
+ *    description: This API is used to delete a message
+ *    parameters:
  *          - in: path
  *            name: id
  *            required: true
  *            description: numeric ID required
  *            schema:
- *            type: integer
- *      responses:
- *          200:
- *              description: Data deleted successfully
+ *              type: string
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *           $ref: "#components/schemas/contactSchema"
+ *    responses:
+ *      200:
+ *          description: Message delete successfully
  */
-
 //login for a user
 /**
  * @swagger
