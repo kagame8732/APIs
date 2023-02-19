@@ -2,7 +2,6 @@ const { expect } = require("chai");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const server = require("../app");
-const Blog = require("../models/Blog");
 
 chai.should();
 chai.use(chaiHttp);
@@ -32,7 +31,6 @@ describe("API Test", () => {
       done();
     });
   });
-
   /**
    * Test the GET message  (by id) route
    */
@@ -175,24 +173,13 @@ describe("API Test", () => {
 
   describe("DELETE /api/blogs/:id", function () {
     this.timeout(15000);
-    let blogId;
-    beforeEach((done) => {
-      const blogs = new Blog({
-        image: "https://unsplash.com/photos/2V7KKhNwQTk",
-        title: "mocha testing blog",
-        description: "Hello to you",
-      });
-      blogs.save((err, create) => {
-        blogId = create._id;
-        done();
-      });
-    });
+    // let blogId = "63f2712cfc7964f9d1407ce6";
     it("It should DELETE an existing blog", (done) => {
       const token =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGV4QGdtYWlsLmNvbSIsImlkIjoiNjNlYzkxN2VmMjYxYjY2Y2ZjYzA4ZGYwIiwiaWF0IjoxNjc2NjE4ODM1fQ.Yd8uuTPC8n4Vc0AEDrkyV8KetXv-mqt2TUXqaHDaN5I";
       chai
         .request(server)
-        .delete(`/api/blogs/${blogId}`)
+        .delete("/api/blogs/63f2712cfc7964f9d1407ce6")
         .set({ Authorization: `Bearer ${token}` })
         .end((err, response) => {
           expect(response).to.have.status(200);
@@ -204,7 +191,46 @@ describe("API Test", () => {
   /**
    * Test Editing a blog route
    */
-
+  describe("PATCH /api/blogs", () => {
+    it("it should UPDATE an existing blog", (done) => {
+      const blogs = {
+        image: "https://unsplash.com/photos/2V7KKhNwQTk",
+        title: "mocha testing blog",
+        description: "Hello to you",
+      };
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGV4QGdtYWlsLmNvbSIsImlkIjoiNjNlYzkxN2VmMjYxYjY2Y2ZjYzA4ZGYwIiwiaWF0IjoxNjc2NjE4ODM1fQ.Yd8uuTPC8n4Vc0AEDrkyV8KetXv-mqt2TUXqaHDaN5I";
+      chai
+        .request(server)
+        .patch("/api/blogs/63f2712cfc7964f9d1407ce6")
+        .send(blogs)
+        .set({ Authorization: `Bearer ${token}` })
+        .end((err, response) => {
+          response.should.have.status(200);
+          response.body.should.have.property("image");
+          response.body.should.have.property("title");
+          response.body.should.have.property("description");
+        });
+      done();
+    });
+    it("it should NOT POST a new blog without image", (done) => {
+      const blogs = {
+        title: "mocha testing blog",
+        description: "Hello to you",
+      };
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGV4QGdtYWlsLmNvbSIsImlkIjoiNjNlYzkxN2VmMjYxYjY2Y2ZjYzA4ZGYwIiwiaWF0IjoxNjc2NjE4ODM1fQ.Yd8uuTPC8n4Vc0AEDrkyV8KetXv-mqt2TUXqaHDaN5I";
+      chai
+        .request(server)
+        .patch("/api/blogs")
+        .send(blogs)
+        .set({ Authorization: `Bearer ${token}` })
+        .end((err, response) => {
+          response.should.have.status(404);
+        });
+      done();
+    });
+  });
   /**
    * Test the GET all users after registration
    */
@@ -292,19 +318,17 @@ describe("API Test", () => {
   });
 
   /**
-   * Get Add a comment
+   * Add a comment
    */
-
   describe("POST /api/blogs/comments", () => {
     it("it should POST a new comment", (done) => {
       const commentUser = {
         name: "Manzi",
         message: "Chris",
       };
-
       chai
         .request(server)
-        .post("/api/blogs/comments:id")
+        .post("/api/blogs/comments/63f2712cfc7964f9d1407ce6")
         .send(commentUser)
         .end((err, response) => {
           response.should.have.status(201);
@@ -317,13 +341,86 @@ describe("API Test", () => {
       const commentUser = {
         name: "Manzi",
       };
-
       chai
         .request(server)
         .post("/api/blogs/comments")
         .send(commentUser)
         .end((err, response) => {
+          response.should.have.status(404);
+        });
+      done();
+    });
+  });
+
+  /**
+   * Get a comment by it's blog id
+   */
+  describe("GET /api/blogs/comment/63f2712cfc7964f9d1407ce6", () => {
+    it("it should GET a comment by blog id ", (done) => {
+      chai
+        .request(server)
+        .get("/api/blogs/comments/63f2712cfc7964f9d1407ce6")
+        .end((err, response) => {
+          response.should.have.status(200);
+        });
+      done();
+    });
+    it("it should NOT GET a comment", (done) => {
+      chai
+        .request(server)
+        .get("/api/blog/comment")
+        .end((err, response) => {
+          response.should.have.status(404);
+        });
+      done();
+    });
+  });
+  /**
+   * Add like by it's id
+   */
+  describe("POST /api/blogs/likes", () => {
+    it("it should POST a new like", (done) => {
+      chai
+        .request(server)
+        .post("/api/blogs/likes/63f2712cfc7964f9d1407ce6")
+        .send()
+        .end((err, response) => {
           response.should.have.status(201);
+        });
+      done();
+    });
+    it("it should NOT POST a new like", (done) => {
+      chai
+        .request(server)
+        .post("/api/blogs/likes")
+        .send()
+        .end((err, response) => {
+          response.should.have.status(404);
+        });
+      done();
+    });
+  });
+  /**
+   * Get like by it's blog id
+   */
+  describe("GET /api/blogs/likes", () => {
+    it("it should GET a like by blog id", (done) => {
+      chai
+        .request(server)
+        .get("/api/blogs/likes/63f2712cfc7964f9d1407ce6")
+        .send()
+        .end((err, response) => {
+          response.should.have.status(201);
+        });
+      done();
+    });
+    it("it should NOT POST a new like", (done) => {
+      chai
+        .request(server)
+        .get("/api/blogs/like")
+        .send()
+        .end((err, response) => {
+          response.should.have.status(404);
         });
       done();
     });

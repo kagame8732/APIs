@@ -21,7 +21,7 @@ const createComment = async (req, res) => {
     blogId: Id,
   });
   await comment.save();
-  res.status(201).json({ comment: comment });
+  res.status(201).json(comment);
   const blogCommented = await Blog.findById(Id);
   blogCommented.comment.push(comment);
   await blogCommented.save();
