@@ -5,6 +5,7 @@ const db = require("./db/db");
 const app = express();
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+const cors = require("cors");
 
 /**
  * @swagger
@@ -326,7 +327,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 /**
  * @swagger
- * /contacts:
+ * /contacts/{id}:
  *  delete:
  *    security:
  *      - bearerAuth: []
@@ -416,7 +417,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *          200:
  *              description: To test Get method
  */
-//Delete Blog
+//Delete an existing user
 
 /**
  * @swagger
@@ -437,6 +438,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  */
 
 app.use(express.json());
+app.use(cors());
 app.use("/api", routes);
 const PORT = 5000;
 mongoose.connect(db.dbUrl).then(() => {
