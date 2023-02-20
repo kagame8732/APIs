@@ -1,11 +1,10 @@
-const express = require("express");
 const mongoose = require("mongoose");
 const routes = require("./routes/routes");
 const db = require("./db/db");
+const express = require("express");
 const app = express();
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-const cors = require("cors");
 
 /**
  * @swagger
@@ -437,8 +436,14 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *              description: Data deleted successfully
  */
 
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*"); // replace * with a specific domain in production
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
+
 app.use(express.json());
-app.use(cors());
 app.use("/api", routes);
 const PORT = 5000;
 mongoose.connect(db.dbUrl).then(() => {
