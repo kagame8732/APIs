@@ -19,7 +19,7 @@ let message_create = async (req, res) => {
     message: req.body.message,
   });
   await contact.save();
-  res.status(201).send({ message: "Message added successful" });
+  res.status(201).json({ message: "Message added successful" });
 };
 //Get individual message
 let message_detail = async (req, res) => {
@@ -35,10 +35,10 @@ let message_details = async (req, res) => {
 let message_delete = async (req, res) => {
   try {
     await Contact.deleteOne({ _id: req.params.id });
-    res.status(204).send({ Message: "Message deleted successfully" });
+    res.status(204).json({ Message: "Message deleted successfully" });
   } catch {
     res.status(404);
-    res.send({ error: "Message doesn't exist" });
+    res.json({ error: "Message doesn't exist" });
   }
 };
 
