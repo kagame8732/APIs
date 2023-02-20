@@ -64,7 +64,7 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Blog API Documentation",
+      title: "Blog API Documentation by Kalex",
       version: "1.0.0",
     },
 
@@ -386,16 +386,23 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  */
 
 //Get a list of users
-
 /**
  * @swagger
  * /signup:
  *  get:
- *      summary: This API is used to check if get method is working or not
- *      description: This API is used to check if get method is working or not
+ *      security:
+ *      - bearerAuth: []
+ *      summary: See list of users
+ *      description: Used to see a list of users
+ *      requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *           $ref: "#components/schemas/signupSchema"
  *      responses:
- *          200:
- *              description: To test Get method
+ *      200:
+ *          description: List of users
  */
 
 //Get one user
