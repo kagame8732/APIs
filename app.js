@@ -3,6 +3,8 @@ const routes = require("./routes/routes");
 const db = require("./db/db");
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
+const cors = require("cors");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
@@ -452,6 +454,8 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use("/api", routes);
+// app.use(bodyParser.json({ limit: "10mb" }));
+// app.use(cors());
 const PORT = 5000;
 mongoose.connect(db.dbUrl).then(() => {
   app.listen(PORT, () => {
