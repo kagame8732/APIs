@@ -171,7 +171,7 @@ describe("API Test", () => {
    * Test the Delete a blog
    */
 
-  describe("DELETE /api/blogs/:id", function () {
+  describe("DELETE /api/blogs/63f48af0c7ddc50268210437", function () {
     this.timeout(15000);
     // let blogId = "63f2712cfc7964f9d1407ce6";
     it("It should DELETE an existing blog", (done) => {
@@ -179,7 +179,7 @@ describe("API Test", () => {
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGV4QGdtYWlsLmNvbSIsImlkIjoiNjNlYzkxN2VmMjYxYjY2Y2ZjYzA4ZGYwIiwiaWF0IjoxNjc2NjE4ODM1fQ.Yd8uuTPC8n4Vc0AEDrkyV8KetXv-mqt2TUXqaHDaN5I";
       chai
         .request(server)
-        .delete("/api/blogs/63f2712cfc7964f9d1407ce6")
+        .delete("/api/blogs/63f48af0c7ddc50268210437")
         .set({ Authorization: `Bearer ${token}` })
         .end((err, response) => {
           expect(response).to.have.status(200);
@@ -202,7 +202,7 @@ describe("API Test", () => {
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGV4QGdtYWlsLmNvbSIsImlkIjoiNjNlYzkxN2VmMjYxYjY2Y2ZjYzA4ZGYwIiwiaWF0IjoxNjc2NjE4ODM1fQ.Yd8uuTPC8n4Vc0AEDrkyV8KetXv-mqt2TUXqaHDaN5I";
       chai
         .request(server)
-        .patch("/api/blogs/63f2712cfc7964f9d1407ce6")
+        .patch("/api/blogs/63f36ecd8bc78b8565d153f8")
         .send(blogs)
         .set({ Authorization: `Bearer ${token}` })
         .end((err, response) => {
@@ -328,7 +328,7 @@ describe("API Test", () => {
       };
       chai
         .request(server)
-        .post("/api/blogs/comments/63f2712cfc7964f9d1407ce6")
+        .post("/api/blogs/comments/63f36ecd8bc78b8565d153f8")
         .send(commentUser)
         .end((err, response) => {
           response.should.have.status(201);
@@ -355,7 +355,7 @@ describe("API Test", () => {
   /**
    * Get a comment by it's blog id
    */
-  describe("GET /api/blogs/comment/63f2712cfc7964f9d1407ce6", () => {
+  describe("GET /api/blogs/comment/63f36ecd8bc78b8565d153f8", () => {
     it("it should GET a comment by blog id ", (done) => {
       chai
         .request(server)
@@ -382,7 +382,7 @@ describe("API Test", () => {
     it("it should POST a new like", (done) => {
       chai
         .request(server)
-        .post("/api/blogs/likes/63f2712cfc7964f9d1407ce6")
+        .post("/api/blogs/likes/63f36ecd8bc78b8565d153f8")
         .send()
         .end((err, response) => {
           response.should.have.status(201);
@@ -407,7 +407,7 @@ describe("API Test", () => {
     it("it should GET a like by blog id", (done) => {
       chai
         .request(server)
-        .get("/api/blogs/likes/63f2712cfc7964f9d1407ce6")
+        .get("/api/blogs/likes/63f36ecd8bc78b8565d153f8")
         .send()
         .end((err, response) => {
           response.should.have.status(201);
