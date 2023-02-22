@@ -32,7 +32,7 @@ const {
 // });
 // const upload = multer({ storage: storage });
 //Blog
-router.post("/blogs", protectRoute, blogController.blog_create);
+router.post("/blogs", blogController.blog_create);
 router.get("/blogs/:id", blogController.blog_detail);
 router.get("/blogs", blogController.blog_details);
 router.patch("/blogs/:id", protectRoute, blogController.blog_update);
