@@ -70,21 +70,16 @@ const options = {
       version: "1.0.0",
     },
 
-    // servers: [
-    //   {
-    //     url: "http://localhost:5000/api",
-    //   },
-    // ],
+    servers: [
+      {
+        url: "http://localhost:5000/api",
+      },
+    ],
   },
   apis: ["./app.js"],
 };
 const swaggerSpec = swaggerJSDoc(options);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-app.get("/api-docs.json", (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-  res.send(swaggerSpec);
-});
 
 //Post a Blog
 /**
