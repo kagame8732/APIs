@@ -3,8 +3,6 @@ const routes = require("./routes/routes");
 const db = require("./db/db");
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
-const cors = require("cors");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
@@ -73,6 +71,9 @@ const options = {
     servers: [
       {
         url: "http://localhost:5000/api",
+      },
+      {
+        url: "https://apis-lvc4.onrender.com/api",
       },
     ],
   },
@@ -445,7 +446,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *              description: Data deleted successfully
  */
 
-app.use((req, res, next) => {
+https: app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
@@ -454,8 +455,6 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use("/api", routes);
-// app.use(bodyParser.json({ limit: "10mb" }));
-// app.use(cors());
 const PORT = 5000;
 mongoose.connect(db.dbUrl).then(() => {
   app.listen(PORT, () => {
