@@ -15,28 +15,13 @@ const {
   login,
   protectRoute,
 } = require("../Controllers/userController");
-// const multer = require("multer");
-// const cloudinary = require("cloudinary").v2;
-// const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
-// cloudinary.config({
-//   cloud_name: "damoif3ob",
-//   api_key: "642845615319414",
-//   api_secret: "B0wd_NQcJBlze0ZOaq2U48tuKE8",
-// });
-// const storage = new CloudinaryStorage({
-//   cloudinary: cloudinary,
-//   params: {
-//     folder: "DEV",
-//   },
-// });
-// const upload = multer({ storage: storage });
 //Blog
 router.post("/blogs", blogController.blog_create);
 router.get("/blogs/:id", blogController.blog_detail);
 router.get("/blogs", blogController.blog_details);
 router.patch("/blogs/:id", protectRoute, blogController.blog_update);
-router.delete("/blogs/:id", protectRoute, blogController.blog_delete);
+router.delete("/blogs/:id", blogController.blog_delete);
 //Blog Comment
 router.post("/blogs/comments/:id", createComment);
 router.get("/blogs/comments/:id", getComment);

@@ -16,8 +16,11 @@ const createLike = async (req, res) => {
 const getLike = async (req, res) => {
   try {
     const blogId = req.params.id;
-    const likes = await Like.find({ blogId });
-    res.status(200).json({ numberOfLikes: Like.length });
+    const blog = await Blog.findById({ _id: req.params.id });
+
+    res.status(200).json({ numberOfLikes: blog.like.length });
+
+    console.log(Like.length);
   } catch (err) {
     res.status(500).json({ message: "Check your blog Id again" });
   }
