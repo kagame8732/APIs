@@ -70,10 +70,7 @@ const options = {
 
     servers: [
       {
-        url: "http://localhost:5000/api",
-      },
-      {
-        url: "https://apis-lvc4.onrender.com/api",
+        url: "https://apis-lvc4.onrender.com",
       },
     ],
   },
